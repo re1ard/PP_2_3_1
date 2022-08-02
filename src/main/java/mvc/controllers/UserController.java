@@ -1,6 +1,5 @@
 package mvc.controllers;
 
-import mvc.dao.UserDAO;
 import mvc.models.User;
 import mvc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class UserCon {
+public class UserController {
     private UserService service;
 
     @Autowired
