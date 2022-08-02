@@ -19,6 +19,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    public User() {
+
+    }
+
     @Override
     public String toString() {
         return String.format("UID: %s | Username: %s | Password: %s | E-Mail: %s",
@@ -29,6 +33,13 @@ public class User {
     }
 
     public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public User(long id, String username, String password, String email) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;

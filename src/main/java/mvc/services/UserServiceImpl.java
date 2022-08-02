@@ -31,8 +31,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         dao.addUser(user);
+        return user;
     }
 
     @Override
@@ -41,7 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         dao.updateUser(user);
+        return user;
     }
 }

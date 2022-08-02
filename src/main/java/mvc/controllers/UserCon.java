@@ -25,7 +25,7 @@ public class UserCon {
     public String users(Model model) {
         List<User> users = service.getAllUsers();
         //model.addAttribute("users", users);
-        String response = "";
+        String response = "Текущие пользователи:\n";
         for(User u: users){
             response += u + "\n";
         }
@@ -41,16 +41,23 @@ public class UserCon {
 
     @PostMapping("/add")
     @ResponseBody
-    public String addUser(@RequestBody User user) {
-        service.addUser(user);
-        return "" + user;
+    public String addUser(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "email") String email
+            ) {
+        return "" + service.addUser(new User(username, password, email));
     }
 
     @PutMapping("/update")
     @ResponseBody
-    public String updateUser(@RequestBody User user) {
-        service.updateUser(user);
-        return "" + user;
+    public String updateUser(
+            @RequestParam(value = "id") long id,
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "password", required = false) String password,
+            @RequestParam(value = "email", required = false) String email
+    ) {
+        return "" + service.updateUser(new User(id, username, password, email));
     }
 
     @DeleteMapping("/remove/{id}")
