@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
 public class UserCon {
     private UserService service;
 
@@ -21,7 +20,7 @@ public class UserCon {
         this.service = service;
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     @ResponseBody
     public String users(Model model) {
         List<User> users = service.getAllUsers();

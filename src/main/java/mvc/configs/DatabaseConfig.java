@@ -1,5 +1,6 @@
 package mvc.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ import java.util.Properties;
 public class DatabaseConfig {
 
     private Environment env;
-
+    @Autowired
     public void setEnv(Environment env) {
         this.env = env;
     }
@@ -45,7 +46,7 @@ public class DatabaseConfig {
         LocalContainerEntityManagerFactoryBean factoryBean
                 = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(getDataSource());
-        factoryBean.setPackagesToScan("web.model");
+        factoryBean.setPackagesToScan("mvc.models");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -66,7 +67,7 @@ public class DatabaseConfig {
         Properties props = new Properties();
         props.put("hibernate.show_sql", env.getProperty("db.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("db.hbm2ddl.auto"));
-        props.put("hibernate.dialect", env.getProperty("db.dialect"));
+        //props.put("hibernate.dialect", env.getProperty("db.dialect"));
         return props;
     }
 }
