@@ -24,9 +24,9 @@ public class UserController {
     public String users(Model model) {
         List<User> users = service.getAllUsers();
         //model.addAttribute("users", users);
-        String response = "Текущие пользователи:\n";
+        String response = "Текущие пользователи:<br>";
         for(User u: users){
-            response += u + "\n";
+            response += u + "<br>";
         }
 
         return response;
@@ -62,8 +62,13 @@ public class UserController {
     @DeleteMapping("/remove/{id}")
     @ResponseBody
     public String removeUser(@PathVariable("id") long id) {
-        service.removeUser(service.getUserById(id));
-        return "deleted";
+        User user = service.getUserById(id);
+        if (user != null) {
+            service.removeUser(user);
+            return "deleted";
+        } else {
+            return "not found user";
+        }
     }
 
 }
