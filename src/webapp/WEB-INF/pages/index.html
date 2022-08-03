@@ -25,14 +25,14 @@
             <td th:text="${user.password}"></td>
             <td th:text="${user.email}"></td>
             <td>
-                <form action="#" th:action="@{/update/} + ${{user.id}}" method="get">
+                <form th:action="@{/update/} + ${{user.id}}" method="get">
                     <button type="submit">
                         <i>X</i>
                     </button>
                 </form>
             </td>
             <td>
-                <form action="#" th:action="@{/remove/} + ${{user.id}}" method="post">
+                <form th:action="@{/remove/} + ${{user.id}}" method="post">
                     <button type="submit">
                         <i>X</i>
                     </button>
