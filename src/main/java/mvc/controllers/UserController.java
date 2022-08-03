@@ -20,16 +20,16 @@ public class UserController {
     }
 
     @GetMapping("/")
-    @ResponseBody
     public String users(Model model) {
         List<User> users = service.getAllUsers();
         //model.addAttribute("users", users);
-        String response = "Текущие пользователи:<br>";
-        for(User u: users){
-            response += u + "<br>";
-        }
+        //String response = "Текущие пользователи:<br>";
+        //for(User u: users){
+        //    response += u + "<br>";
+        //}
+        model.addAttribute("users", users);
 
-        return response;
+        return "index";
     }
 
     @GetMapping("/{id}")
@@ -48,6 +48,40 @@ public class UserController {
         return "" + service.addUser(new User(username, password, email));
     }
 
+    @GetMapping("/add_user")
+    public String NewUser(Model model) {
+        model.addAttribute("user", new User());
+        return "add_user";
+    }
+
+    @PostMapping("/add_user")
+    public String AddNewUser(@ModelAttribute("user") User user) {
+        service.addUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateUserID(
+            @PathVariable("id") long id,
+            Model model
+    ) {
+        User user = service.getUserById(id);
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("user", user);
+        return "update_user";
+
+    }
+
+    @PostMapping("/update/{id}")
+    public String UpdateCurrentUser(@PathVariable("id") long id, @ModelAttribute("user") User user) {
+        user.setId(id);
+        service.updateUser(user);
+        return "redirect:/";
+    }
+
     @PutMapping("/update")
     @ResponseBody
     public String updateUser(
@@ -59,16 +93,17 @@ public class UserController {
         return "" + service.updateUser(new User(id, username, password, email));
     }
 
-    @DeleteMapping("/remove/{id}")
-    @ResponseBody
-    public String removeUser(@PathVariable("id") long id) {
+    @PostMapping ("/remove/{id}")
+    public String removeUser(
+            @PathVariable("id") long id,
+            Model model
+    ) {
         User user = service.getUserById(id);
         if (user != null) {
             service.removeUser(user);
-            return "deleted";
-        } else {
-            return "not found user";
         }
+
+        return "redirect:/";
     }
 
 }
